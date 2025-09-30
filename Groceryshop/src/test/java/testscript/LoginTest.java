@@ -10,15 +10,18 @@ import org.testng.annotations.Test;
 
 import Base.TestNGBase;
 import Utilities.ExcelUtility;
+import constant.Constants;
+import constant.Messages;
 import pages.LoginPage;
 
 public class LoginTest extends TestNGBase{
-	@Test(priority = 1,description = "verify login with valid credentials",retryAnalyzer = retry.Retry.class )
+	@Test(priority = 1,description = "verify login with valid credentials",retryAnalyzer = retry.Retry.class,groups= {"smoke"} )
 	//retry mechnaisn run avan helpcheyunu
 	public void verifyvalidusernamevalidpassword() throws IOException {
-		String usernameValue =ExcelUtility.getStringData(1, 0, "LoginPage");
-		String passwordValue =ExcelUtility.getStringData(1, 1, "LoginPage");
+		String usernameValue =ExcelUtility.getStringData(1, 0,Constants.LOGINSHEET);
+		String passwordValue =ExcelUtility.getStringData(1, 1, Constants.LOGINSHEET);
 	//	
+		
 		LoginPage login=new LoginPage(driver);
 		login.enterusername(usernameValue);
 		login.enterpassword(passwordValue);
@@ -26,12 +29,14 @@ public class LoginTest extends TestNGBase{
 		
 		String expected="https://groceryapp.uniqassosiates.com/admin";
 	    String actual=driver.getCurrentUrl();
-	    Assert.assertEquals(actual,expected, "Login is not successful with valid credential");
+//		Assert.assertEquals(actual, expected,"Login is not successfull with valid credentials");
+		Assert.assertEquals(actual, expected,Messages.VALIDLOGIN_ASSERT);
+	
 	}
 	@Test(priority = 2, description = "verify login with validusername and invalidpw")
 	public void verifyvalidusernameinvalidpassword() throws IOException{
-		String usernameValue =ExcelUtility.getStringData(2, 0, "LoginPage");
-		String passwordValue =ExcelUtility.getStringData(2, 1, "LoginPage");
+		String usernameValue =ExcelUtility.getStringData(2, 0, Constants.LOGINSHEET);
+		String passwordValue =ExcelUtility.getStringData(2, 1, Constants.LOGINSHEET);
 		
 		LoginPage login=new LoginPage(driver);
 		login.enterusername(usernameValue);
@@ -41,12 +46,12 @@ public class LoginTest extends TestNGBase{
 		
 		String expected="https://groceryapp.uniqassosiates.com/admin/login";
 	    String actual=driver.getCurrentUrl();
-	    Assert.assertEquals(actual,expected, "Login is successful with valid username and invalid password");
+	    Assert.assertEquals(actual,expected, Messages.INVALIDPASSWORD_ASSERT);
 	}
 	@Test(priority = 3, description = "verify login with invalid usename and invalid pw")
 	public void verifyinvalidusernamevalidpassword() throws IOException{
-		String usernameValue =ExcelUtility.getStringData(3, 0, "LoginPage");
-		String passwordValue =ExcelUtility.getStringData(3, 1, "LoginPage");
+		String usernameValue =ExcelUtility.getStringData(3, 0, Constants.LOGINSHEET);
+		String passwordValue =ExcelUtility.getStringData(3, 1, Constants.LOGINSHEET);
 		
 		LoginPage login=new LoginPage(driver);
 		login.enterusername(usernameValue);
@@ -56,7 +61,7 @@ public class LoginTest extends TestNGBase{
 		
 		String expected="https://groceryapp.uniqassosiates.com/admin/login";
 	    String actual=driver.getCurrentUrl();
-	    Assert.assertEquals(actual,expected, "Login is successful with invalidusername and valid passwrd");
+	    Assert.assertEquals(actual,expected, Messages.INVALIDUSERNAME_ASSERT);
 		
 	}
 	@Test(priority = 4,description = "verify login with invalid credentials",dataProvider = "loginProvider")
@@ -72,7 +77,7 @@ public class LoginTest extends TestNGBase{
 		
 		String expected="https://groceryapp.uniqassosiates.com/admin/login";
 	    String actual=driver.getCurrentUrl();
-	    Assert.assertEquals(actual,expected, "Login is successful with invalidusername and Invalid passwrd");
+	    Assert.assertEquals(actual,expected, Messages.INVALIDLOGIN_ASSERT);
 	}
 	
 	@Test

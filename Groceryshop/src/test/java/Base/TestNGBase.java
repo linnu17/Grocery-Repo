@@ -1,6 +1,7 @@
 package Base;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class TestNGBase {
 		driver=new ChromeDriver(options);
 	driver.get( "https://groceryapp.uniqassosiates.com/admin/login");//to launch url use get method
 		driver.manage().window().maximize();//maximize window
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		//driver.close(); //to close the current window
 		//driver.quit();// to close the complete window
 	}

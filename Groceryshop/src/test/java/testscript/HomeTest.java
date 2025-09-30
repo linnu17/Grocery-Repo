@@ -9,14 +9,16 @@ import org.testng.annotations.Test;
 
 import Base.TestNGBase;
 import Utilities.ExcelUtility;
+import constant.Constants;
+import constant.Messages;
 import pages.HomePage;
 import pages.LoginPage;
 
 public class HomeTest extends TestNGBase{
 	@Test (description="verify logout")
 	public void verifylogout() throws IOException {
-			String usernameValue =ExcelUtility.getStringData(1, 0, "LoginPage");
-			String passwordValue =ExcelUtility.getStringData(1, 1, "LoginPage");
+			String usernameValue =ExcelUtility.getStringData(1, 0,Constants.LOGINSHEET);
+			String passwordValue =ExcelUtility.getStringData(1, 1, Constants.LOGINSHEET);
 			// click window+v
 			LoginPage login=new LoginPage(driver);
 			login.enterusername(usernameValue);
@@ -30,7 +32,8 @@ public class HomeTest extends TestNGBase{
 			
 			String expected="https://groceryapp.uniqassosiates.com/admin";
 		    String actual=driver.getCurrentUrl();
-		    Assert.assertEquals(actual,expected, "Login is not successful with valid credential");
+//			Assert.assertEquals(actual, expected,"Logout is not successfull");
+			Assert.assertEquals(actual, expected,Messages.LOGOUT_ASSERT);
 		}
 	}
 
